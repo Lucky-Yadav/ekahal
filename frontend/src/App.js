@@ -17,7 +17,7 @@ const Login = () => {
   const [loginData, setloginData] = useState({
     Title: "",
     Description: "",
-    DueDate: "",
+    DueDate: value,
   });
   const [taskList, settaskList] = useState([]);
   const columns = [
@@ -166,19 +166,6 @@ const Login = () => {
             checkboxSelection
           />
         </div>
-
-        {Object.keys(taskList).map((el) => (
-          <TextField
-            key={el}
-            value={loginData[el]}
-            onChange={handlechange}
-            name={el}
-            id={el}
-            label={el.toLocaleUpperCase()}
-            variant="outlined"
-            required
-          />
-        ))}
       </div>
       <h5>Create Task</h5>
       <div className="div">
