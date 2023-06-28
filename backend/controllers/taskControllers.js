@@ -16,15 +16,15 @@ const getTask = async (req, res) => {
   }
 };
 const createTask = async (req, res) => {
-  const { Description, Title } = req.body;
-  console.log(req.body)
+  console.log(req.body);
+  const { Description, Title, DueDate } = req.body;
 
   try {
     const existingtask = await taskModel.findOne({ Task: Title });
     if (existingtask) {
       return res.status(400).json({ message: "Task already created" });
     }
-    const Task = await taskModel.create({ TaskName: Description, Task: Title });
+    const Task = await taskModel.create({ TaskName: Description, Task: Title, DueDate: DueDate});
     console.log(Task);
     res.status(201).json({
       Task: Task,

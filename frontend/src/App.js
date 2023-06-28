@@ -17,36 +17,14 @@ const Login = () => {
   const [loginData, setloginData] = useState({
     Title: "",
     Description: "",
-    DueDate: value,
+    DueDate: "",
   });
   const [taskList, settaskList] = useState([]);
   const columns = [
     { field: "Task", headerName: "Title", width: 130 },
     { field: "TaskName", headerName: "Description", width: 250 },
-    {
-      field: "Date",
-      headerName: "Date & Time",
-      width: 350,
-      sortable: false,
-      disableClickEventBubbling: true,
-
-      renderCell: (params) => {
-        
-        return (
-          <>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={["DateTimePicker"]}>
-                <DateTimePicker
-                  label="Due Date"
-                  value={value}
-                  onChange={(newValue) => setValue(newValue)}
-                />
-              </DemoContainer>
-            </LocalizationProvider>
-          </>
-        );
-      },
-    },
+    { field: "DueDate", headerName: "Due Date & Time", width: 250 },
+    
     {
       field: "action",
       headerName: "Action",
@@ -116,6 +94,25 @@ const Login = () => {
 
   const handletask = () => {
     //  console.log(1);
+    // console.log(value)
+    const dateTimeValue = value.$d;// Assuming dateTimeValue is the value obtained from the Material-UI DateTimePicker
+
+    const dateString = dateTimeValue.toLocaleDateString("en", {
+      dateStyle: "short",
+    });
+    const timeString = dateTimeValue.toLocaleTimeString("en", {
+      timeStyle: "short",
+    });
+
+    // console.log("Date:", dateString);
+    // console.log("Time:", timeString);
+    const DueDate = `${dateString + " " + timeString}`;
+    setloginData((prev) => ({
+      ...prev,
+      // eslint-disable-next-line
+      ["DueDate"]: DueDate,
+    }));
+    console.log(DueDate)
     axios({
       method: "post",
       url: "http://localhost:3072/tasks/tasks",
