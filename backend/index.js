@@ -13,6 +13,10 @@ app.use(express.json());
 app.use(cors());
 dotenv.config();
 app.use("/tasks", taskRouter);
+app.get("/", (req, res) => {
+  console.log(res);
+  res.send("success");
+});
 
 mongoose
   .connect(`${process.env.MongoDb_String}`)
